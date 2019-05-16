@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PayAndroidSdk</string>
+    <string name="click_start_pay">点击发起支付</string>
+</resources>
