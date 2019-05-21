@@ -10,10 +10,7 @@ import cn.xyiio.pay.listener.OnPayDialogButtonClickListener
 
 enum class PayType { ALIPAY, WECHAT }
 
-class PayDialog (context: Context, money: String) {
-
-    private val mContext = context
-    private val mMoney = money
+class PayDialog (private val context: Context, private val money: String) {
 
     private lateinit var type: PayType
 
@@ -23,7 +20,7 @@ class PayDialog (context: Context, money: String) {
     fun show() {
         val items = arrayOf("支付宝", "微信")
 
-        val builder = AlertDialog.Builder(mContext)
+        val builder = AlertDialog.Builder(context)
 
         builder.setSingleChoiceItems(items, -1) { _, which ->
             type = if (which == 0)
@@ -44,14 +41,14 @@ class PayDialog (context: Context, money: String) {
     @Suppress("DEPRECATION")
     @SuppressLint("InflateParams")
     private fun showPayDialog(listener: OnPayDialogButtonClickListener) {
-        val builder = AlertDialog.Builder(mContext)
+        val builder = AlertDialog.Builder(context)
 
         if (type == PayType.ALIPAY)
             builder.setTitle("支付宝")
         else
             builder.setTitle("微信")
 
-        val view = LayoutInflater.from(mContext).inflate(R.layout.custom_dialog, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null)
 
         view.findViewById<TextView>(R.id.title).text =
             Html.fromHtml("<p>您需支付 <font color=\"#ff0000\">$mMoney</font> 元</p>")
@@ -85,7 +82,7 @@ class PayDialog (context: Context, money: String) {
     }
 
     fun showDestructionDialog() {
-        val builder = AlertDialog.Builder(mContext)
+        val builder = AlertDialog.Builder(context)
 
         builder.setMessage("如果有正在支付的订单退出后将会重新开始，是否退出？")
 
@@ -97,7 +94,7 @@ class PayDialog (context: Context, money: String) {
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            (mContext as OnPayDialogButtonClickListener).onClickDestructionCancelButton(payDialog).let {
+            (context as OnPayDialogButtonClickListener).onClickDestructionCancelButton(payDialog).let {
                 dialog.dismiss()
             }
         }
