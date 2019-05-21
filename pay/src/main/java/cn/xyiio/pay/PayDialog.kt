@@ -10,7 +10,8 @@ import cn.xyiio.pay.listener.OnPayDialogButtonClickListener
 
 enum class PayType { ALIPAY, WECHAT }
 
-class PayDialog (private val context: Context, private val money: String) {
+class PayDialog (private val context: Context, private val money: String,
+                 private val listener: OnPayDialogButtonClickListener) {
 
     private lateinit var type: PayType
 
@@ -28,9 +29,7 @@ class PayDialog (private val context: Context, private val money: String) {
             else
                 PayType.WECHAT
 
-            showPayDialog(mContext as OnPayDialogButtonClickListener).let {
-                showDialog.dismiss()
-            }
+            showPayDialog(listener).let { showDialog.dismiss() }
         }
 
         showDialog = builder.create()
@@ -94,9 +93,7 @@ class PayDialog (private val context: Context, private val money: String) {
         dialog.show()
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            (context as OnPayDialogButtonClickListener).onClickDestructionCancelButton(payDialog).let {
-                dialog.dismiss()
-            }
+            listener.onClickDestructionCancelButton(payDialog).let { dialog.dismiss() }
         }
     }
 }
