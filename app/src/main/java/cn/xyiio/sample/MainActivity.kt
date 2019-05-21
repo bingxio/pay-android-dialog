@@ -8,19 +8,25 @@ import android.os.Handler
 import android.widget.TextView
 import android.widget.Toast
 import cn.xyiio.pay.PayDialog
+import cn.xyiio.pay.PayType
 import cn.xyiio.pay.listener.OnPayDialogButtonClickListener
 
 class MainActivity : AppCompatActivity(), OnPayDialogButtonClickListener {
 
     private var hasOrder = false
+    
+    private lateinit var type: PayType
 
     override fun onClickDestructionCancelButton(payDialog: AlertDialog) = 
         payDialog.dismiss().let { hasOrder = false }
 
-    override fun onClickPayButton(dialog: AlertDialog) =
+    override fun onClickPayButton(dialog: AlertDialog, type: PayType) {
+        this.type = type
+        
         Toast.makeText(this, "开始支付", Toast.LENGTH_SHORT).show().let {
             hasOrder = true
         }
+    }
 
     override fun onClickCancelButton(dialog: AlertDialog, payDialogInstance: PayDialog) = if (hasOrder) {
         payDialogInstance.showDestructionDialog()
