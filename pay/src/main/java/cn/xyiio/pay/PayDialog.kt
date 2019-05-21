@@ -50,7 +50,7 @@ class PayDialog (private val context: Context, private val money: String,
         val view = LayoutInflater.from(context).inflate(R.layout.custom_dialog, null)
 
         view.findViewById<TextView>(R.id.title).text =
-            Html.fromHtml("<p>您需支付 <font color=\"#ff0000\">$mMoney</font> 元</p>")
+            Html.fromHtml("<p>您需支付 <font color=\"#ff0000\">$money</font> 元</p>")
 
         view.findViewById<TextView>(R.id.destruction).text =
             Html.fromHtml("<p>5.订单将在 <font color=\"#ff0000\">5</font> 分钟后失效</p>")
@@ -68,7 +68,7 @@ class PayDialog (private val context: Context, private val money: String,
         payDialog.show()
 
         payDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            listener.onClickPayButton(payDialog)
+            listener.onClickPayButton(payDialog, type)
         }
 
         payDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
