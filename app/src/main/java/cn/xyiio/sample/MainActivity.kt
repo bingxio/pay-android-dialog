@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity(), OnPayDialogButtonClickListener {
 
     private var hasOrder = false
 
-    override fun onClickDestructionCancelButton(payDialog: AlertDialog) = payDialog.dismiss().let { hasOrder = false }
+    override fun onClickDestructionCancelButton(payDialog: AlertDialog) = 
+        payDialog.dismiss().let { hasOrder = false }
 
     override fun onClickPayButton(dialog: AlertDialog) =
         Toast.makeText(this, "开始支付", Toast.LENGTH_SHORT).show().let {
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnPayDialogButtonClickListener {
         setContentView(R.layout.activity_main)
 
         findViewById<TextView>(R.id.tv).setOnClickListener {
-            PayDialog(this, "10.00").show()
+            PayDialog(this, "10.00", this).show()
         }
     }
 }
